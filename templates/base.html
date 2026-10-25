@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Overview{% endblock %} · HDLC Bank Lab Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}">
+</head>
+<body>
+<header class="topbar"><a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">H</span><span>HDLC Bank<small>Banking portal</small></span></a><nav class="nav-pills">
+  <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}">Overview</a>
+  <a class="nav-link {% if request.endpoint == 'customers' %}active{% endif %}" href="{{ url_for('customers') }}">Customers</a>
+  <a class="nav-link {% if request.endpoint in ['accounts','account_history'] %}active{% endif %}" href="{{ url_for('accounts') }}">Accounts</a>
+  <a class="nav-link {% if request.endpoint == 'transactions' %}active{% endif %}" href="{{ url_for('transactions') }}">Transactions</a>
+  <a class="nav-link {% if request.endpoint == 'branches' %}active{% endif %}" href="{{ url_for('branches') }}">Branches</a>
+  <a class="nav-link {% if request.endpoint == 'employees' %}active{% endif %}" href="{{ url_for('employees') }}">Team</a>
+  <a class="nav-link {% if request.endpoint == 'loans' %}active{% endif %}" href="{{ url_for('loans') }}">Loans</a>
+</nav><div class="top-right"><span class="status"><i></i> System operational</span><div class="avatar small">A</div></div></header>
+<main class="main"><section class="content">
+{% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="alerts">{% for category, message in messages %}<div class="alert {{ category }}">{{ message }}<button onclick="this.parentElement.remove()">×</button></div>{% endfor %}</div>{% endif %}{% endwith %}
+{% block content %}{% endblock %}
+</section><footer>HDLC Bank <span>·</span> Educational RDBMS demonstration</footer></main>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>
